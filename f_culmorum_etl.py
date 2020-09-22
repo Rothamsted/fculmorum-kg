@@ -3,7 +3,6 @@ import requests
 import wget
 import gzip, shutil
 import os
-import mysql.connector
 import pandas as pd
 from Bio import SeqIO
 import urllib
@@ -319,7 +318,6 @@ def egg_nog(path, fn_egg, fn_fasta):
     """
         Edits the eggNog paper and returns all the relavant files necessary
     """
-
     main_df = pd.read_csv(f'{path}/{fn_egg}', sep="\t", error_bad_lines=False, header=None)
     main_df.columns = ['query_name', 'seed eggNOG ortholog', 'seed ortholog evalue', 'seed ortholog score',
                         'Predicted taxonomic group', 'Predicted protein name', 'Gene Ontology terms', 'EC number',
@@ -352,7 +350,6 @@ def egg_nog(path, fn_egg, fn_fasta):
         with open(f"{fasta_path}/species/{othor_name}/fcul_{othor_name}.fa", "w") as handle:
             for x in df['query_name']:
                 SeqIO.write(fasta_dict[x], handle, "fasta")
-
         print(f'Finished processing eggNog data for species {o}\n')
 
     # Protein
@@ -514,6 +511,7 @@ def phibase_mapping(base):
 
     phi_base_blast_mapping_df = phi_base_blast_mapping_df.drop_duplicates(subset='Gene', keep='first')
 
+
     gene_name_phibase_merged = pd.merge(phi_base_blast_mapping_df, gene_mapping_fusarium_phi_df, on="Protein ID", how='inner')
     gene_name_phibase_merged = gene_name_phibase_merged[['Gene', 'Gene name']]
     gene_name_phibase_merged = gene_name_phibase_merged.drop_duplicates(subset='Gene name', keep='first')
@@ -549,7 +547,7 @@ def mutant_names_fcul(base):
     f_mutant_db_updated_Df['FungiDB.1'] = f_mutant_db_df_gene_list
 
 
-    f_mutant_db_updated_Df.to_csv(f"{base}/miscfg_gene_names.txt", sep="\t", index=None)
+    f_mutant_db_updated_Df.to_csv(f"{base}/misc/fg_gene_names.txt", sep="\t", index=None)
 
 def blast_2_go(base):
     blast2go_df = pd.read_csv(f"{base}/blast2go/fcul_blast2go.tsv", sep="\t", header=None)
@@ -618,6 +616,7 @@ def fgram_gene_names(base):
     gene_mapping_df.to_csv(f"{base}/OMA/fgram-fcul-gene-name-mapping.txt", sep="\t", index=None)
 
 
+#base = '/home/joseph/data'
 parser = OptionParser()
 parser.add_option("-b", "--bdir", type="string",
                   help="Base directory for where all files will be written to or prestored.",
@@ -634,6 +633,8 @@ parser.add_option("-p", "--phi", type="string",
                   help="Boolean to determine if you wish to download phibase data or not, t or f", dest="phi")
 parser.add_option("-b2g", "--blast2go", type="string",
                   help="Boolean to determine if you wish to download blast2go data or not, t or f", dest="b2g")
+parser.add_option("-str", "--string", type="string",
+                  help="Boolean to determine if you wish to download string data or not, t or f", dest="b2g")
 options, arguments = parser.parse_args()
 if options.base:
     print(f"Base directory given as {options.base}")
@@ -650,7 +651,7 @@ if options.ensembl:
         f_cul_df = blast_extract(path = f"{base}/BLAST/", fn = "results_f_culmorum.out", True)
         ascomycota_df = blast_extract(path = f"{base}/BLAST/", fn = "all_uniprot_f_culmorum.out", True)
         f_cul_df.to_csv(f'{base}/BLAST/f_culmorum_phi_mapping.txt', sep="\t", index=None, header=True)
-        ascomycota_df.to_csv(f'{base}/BLAST/f_fulcmorum_ascomycota_mapping.txt', sep="\t", index=None, header=True)
+        ascomycota_df.to_csv(f'{base}/BLAST/f_culmorum_ascomycota_mapping.txt', sep="\t", index=None, header=True)
 
 if options.egg:
     egg_bool = options.egg
@@ -693,3 +694,8 @@ if options.phi:
 #     if b2g_bool.upper() == "TRUE" or b2g_bool.upper() == "T":
         # BLAST2GO - Not used
         #blast_2_go(base)
+
+if options.string:
+    string_bool = options.string
+    if string_bool.upper() == "TRUE" or string_bool.upper() == "T":
+        string_ppi_data(base)
