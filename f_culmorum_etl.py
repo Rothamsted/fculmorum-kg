@@ -320,9 +320,6 @@ def egg_nog(path, fn_egg, fn_fasta):
         Edits the eggNog paper and returns all the relavant files necessary
     """
 
-    #path=(base + "/eggNog")
-    #fn_egg="egg_nog_fusarium_filtered.tsv"
-    #fn_fasta="fculmorumUK99vs_proteins.fa"
     main_df = pd.read_csv(f'{path}/{fn_egg}', sep="\t", error_bad_lines=False, header=None)
     main_df.columns = ['query_name', 'seed eggNOG ortholog', 'seed ortholog evalue', 'seed ortholog score',
                         'Predicted taxonomic group', 'Predicted protein name', 'Gene Ontology terms', 'EC number',
@@ -356,7 +353,6 @@ def egg_nog(path, fn_egg, fn_fasta):
             for x in df['query_name']:
                 SeqIO.write(fasta_dict[x], handle, "fasta")
 
-        #othor_pd_dict[o] = main_df.loc[main_df['Predicted taxonomic group'] == o]
         print(f'Finished processing eggNog data for species {o}\n')
 
     # Protein
@@ -412,7 +408,6 @@ def string_ppi_data(base):
     fn_fgram_ppi_string = unzip_tidy(fn_fgram_ppi_string, '')
     fgram_ppi_df = pd.read_csv(fn_fgram_ppi_string, sep=" ")
     fgram_ppi_df['protein1'], fgram_ppi_df['protein2'] = split_df(fgram_ppi_df, 'protein1', '.', 1), split_df(fgram_ppi_df, 'protein2', '.', 1)
-    #fgram_ppi_df['protein1'], fgram_ppi_df['protein2'] = split_df(fgram_ppi_df, 'protein1', 'P0', 0), split_df(fgram_ppi_df, 'protein2', 'P0', 0)
 
     fgram_ppi_df.to_csv(f'{base}/string/fgram_ppi_stringdb.txt', sep="\t", index=None)
     # Fgram atts
@@ -420,7 +415,6 @@ def string_ppi_data(base):
     fn_fgram_atts = unzip_tidy(fn_fgram_atts, '')
     fgram_atts_df = pd.read_csv(fn_fgram_atts, sep="\t")
     fgram_atts_df['protein_external_id']  = split_df(fgram_atts_df, 'protein_external_id', '.', 1)
-    #fgram_atts_df['protein_external_id'] = split_df(fgram_atts_df, 'protein_external_id', 'P0', 0)
     fgram_atts_df.to_csv(f'{base}/string/fusarium_gram_attributes.txt', sep="\t", index=None)
 
     # F pgram
@@ -514,18 +508,11 @@ def phibase_mapping(base):
     disease_df.to_csv(f"{base}/phibase/fusarium-phibase-disease.txt", sep="\t", index=None)
     phenotype_df = phibase_aggregate(updated_fusarium_df, 'Mutant Phenotype')
     phenotype_df.to_csv(f"{base}/phibase/fusarium-phibase-phenotype.txt", sep="\t", index=None)
-    # This may not be correct for modelling... don't drop duplicates?
-    # updated_fusarium_df = updated_fusarium_df.drop_duplicates(subset="Protein ID")
-    # del updated_fusarium_df['Gene']
-    # del updated_fusarium_df['Gene ID']
-    # updated_fusarium_df.to_csv(f"{base}/phibase/fusarium-phi-base-filtered.txt", sep="\t", index=None)
-
 
     gene_mapping_fusarium_phi_df = fusarium_phi[['Gene', 'Gene ID', 'Protein ID']]
     gene_mapping_fusarium_phi_df.columns = ['Gene name', 'Gene ID', 'Protein ID']
 
     phi_base_blast_mapping_df = phi_base_blast_mapping_df.drop_duplicates(subset='Gene', keep='first')
-
 
     gene_name_phibase_merged = pd.merge(phi_base_blast_mapping_df, gene_mapping_fusarium_phi_df, on="Protein ID", how='inner')
     gene_name_phibase_merged = gene_name_phibase_merged[['Gene', 'Gene name']]
@@ -631,7 +618,6 @@ def fgram_gene_names(base):
     gene_mapping_df.to_csv(f"{base}/OMA/fgram-fcul-gene-name-mapping.txt", sep="\t", index=None)
 
 
-#base = '/home/joseph/data'
 parser = OptionParser()
 parser.add_option("-b", "--bdir", type="string",
                   help="Base directory for where all files will be written to or prestored.",
@@ -707,5 +693,3 @@ if options.phi:
 #     if b2g_bool.upper() == "TRUE" or b2g_bool.upper() == "T":
         # BLAST2GO - Not used
         #blast_2_go(base)
-
-# Need Ncrassa option - same can be done for other species if required. Just needs biomart data (can be obtained via rpy2 api or direct) and OMA tab file to map. Refcator is so.
