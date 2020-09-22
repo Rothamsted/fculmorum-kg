@@ -6,7 +6,7 @@ This repository contains the ETL/scripts used to obtain data for the _F. culmoru
 
 # Dependencies
 
-(Python 3.7+)[https://www.python.org/downloads/] is a requirement for both scripts, as is (R)[https://www.r-project.org/] for rpy2.
+[Python 3.7+](https://www.python.org/downloads/) is a requirement for both scripts, as is [R](https://www.r-project.org/) for rpy2.
 
 Additional Python dependencies include the following:
 
@@ -36,3 +36,9 @@ Please change the input file names accordingly to any updated data, directly in 
 4. For mapping only data use to ```-m``` or ```--mapping``` flag. This will obtain data which maps identifiers, be it gene or protein identifiers, to external identifiers. You will need to have performed the eggNog data transformation, first. 
 5. For additional gene name data, use the ```-n``` or ```--names``` flag. This does require the fusarium_mutant_db.tsv curated file from RRes, which must be present in the misc folder within the base directory. The output will be called fg_gene_names.txt in the misc folder.
 6. For mapping BLAST data (_F.culmorum_ to [PhiBase fasta](http://www.phi-base.org/)) to corresponding proteins in the core [PhiBase database ](https://raw.githubusercontent.com/PHI-base/data/master/releases/phi-base_current.csv), so that phenotypes and diseases can be identified, use the ```-p``` or ```--phi``` flag. Note that the input files must be present in the phibase folder within the base directory, with the blast data being named as ```phibase_blast_raw.out``` and the mapping between phibase & _F.culmorum_ named as ```f_culmorum_phi_mapping.txt```. The resultant files will be in the phibase folder,  which includes ```fusarium-phi-gene-mapping.txt``` & ```phibase-blast-filtered.txt```
+
+^^ Note that the folder structure is indeed created by the ETL script, but you may wish to create it prior to use so dependent files can be placed in their respective folders (as outlined in the above options avaiable). 
+
+This includes:
+
+ 'uniprot', 'BLAST', 'cyc', 'InterPro', 'eggNog', 'mapping', 'ensembl', 'agdb', 'string', 'OMA', 'biomart'
