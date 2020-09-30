@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ondex version="3.0">
+  <Workflow>
+    <Graph name="memorygraph">
+      <Arg name="GraphName">default</Arg>
+      <Arg name="graphId">default</Arg>
+    </Graph>
+	
+	<!-- ensembl -->
+	<Parser name="fastagff">
+      <Arg name="GFF3 File">${baseDir}/organisms/${species_name}/assembly/fculmorumUK99v3_RK.gff</Arg>
+      <Arg name="Fasta File">${baseDir}/organisms/${species_name}/assembly/fculmorumUK99vs_proteins.fa</Arg>
+	  <Arg name="Mapping File">${baseDir}/organisms/${species_name}/mapping/fusarium_culmorum_gene_protein_mapping.txt</Arg>
+	  <Arg name="TaxId">1318462</Arg>
+      <Arg name="Accession">ENSEMBL-FUNGI</Arg>
+      <Arg name="DataSource">ENSEMBL</Arg>
+      <Arg name="Column of the genes">0</Arg>
+      <Arg name="Column of the proteins">1</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+		
+	<!-- Protein-Domain -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/organisms/${species_name}/InterPro/fusarium_culmorum_predicted_protein_domains3_modified.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/protein-domain-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<Export name="oxl">
+      <Arg name="pretty">true</Arg>
+      <Arg name="ExportIsolatedConcepts">true</Arg>
+      <Arg name="GZip">true</Arg>
+      <Arg name="ExportFile">${baseDir}/organisms/${species_name}/knets/FculmorumKNET_test_1.oxl</Arg>
+      <Arg name="graphId">default</Arg>
+    </Export>
+	
+	<!-- egg-nog gene Name HGNC mapping -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/mapping/fcul_gene_mapping.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/gene-mapping-hgnc.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- egg-nog EC -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/mapping/fcul_EC.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/EC.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+
+	<!-- Ensembl-Uniprot -->
+	<!-- OMA: AnidulansAGDB-->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsAnidulansAGDB_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsAnidulansEnsembl -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsAnidulansEnsembl_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+
+	<!-- OMA: FculmorumvsAnidulansUniprot -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsAnidulansUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsFGram ENSEMBL -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFg_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsFGram Uniprot -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFgUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<Mapping name="lowmemoryaccessionbased">
+      <Arg name="IgnoreAmbiguity">true</Arg>
+      <Arg name="RelationType">collapse_me</Arg>
+      <Arg name="WithinDataSourceMapping">true</Arg>
+	  <Arg name="graphId">default</Arg>
+    </Mapping>
+
+    <Transformer name="relationcollapser">
+      <Arg name="CloneAttributes">true</Arg>
+      <Arg name="CopyTagReferences">true</Arg>
+      <Arg name="graphId">default</Arg>
+      <Arg name="RelationType">collapse_me</Arg>
+    </Transformer>
+	
+	<Export name="oxl">
+      <Arg name="pretty">true</Arg>
+      <Arg name="ExportIsolatedConcepts">true</Arg>
+      <Arg name="GZip">true</Arg>
+      <Arg name="ExportFile">${baseDir}/organisms/${species_name}/knets/FculmorumKNET_test_mapping_1.oxl</Arg>
+      <Arg name="graphId">default</Arg>
+    </Export>
+	
+	<!-- OMA: FculmorumvsFLang Ensembl -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFlangEnsembl_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+		
+	<!-- OMA: FculmorumvsFLang UNIPROT -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFlangGenomeUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsFoxy Ensembl NCBI -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFoxy2_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsFpsuedo ENSEMBL -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFpseudEnsembl_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsFpsuedo UniProt -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFpseudUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+
+	<!-- OMA: FculmorumvsFvenenEnsembl -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFvenenEnsembl_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: FculmorumvsFvenenEnsembl -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsFvenenUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: Fculmorum magna oryzae UNIPROT -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsMagnaOryzaeEnsemblUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: Fculmorum N crassa Ensembl: Broken -->
+	 <Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsNcrassaEnsembl_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	
+	<!-- OMA: Fculmorum N crassa UNIPROT -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsNcrassaUniprot_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+
+	<!-- OMA: Fculmorum Secreve UNIPROT -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsScerevUPROT_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+
+	<!-- OMA: Fculmorum Secreve YGD -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsScerevYGD_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	<!-- OMA: Fculmorum Secreve z tritici -->
+	<Parser name="orthoxml_0_3">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/FculmorumvsZymoTrit_HierarchicalGroups.orthoxml</Arg>
+		<Arg name="graphId">default</Arg>
+		<Arg name="DataSource">OMA Standalone</Arg>
+	</Parser>
+	
+	
+	<!-- PPI data:raw - STRINGDB --> 
+	<!-- fusarium gram -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/string/fgram_ppi_stringdb.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/string-db-ensembl-ppi-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- fgram mapping -->
+	<Parser name="tabParser2">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/mapping/fgraminearumalias.tsv</Arg>
+		<Arg name="configFile">${configDir}/${species_name}/fgram-mapping-config.xml</Arg>
+		<Arg name="graphId">default</Arg>
+	</Parser>
+	<!-- PPI data atts - STRINGDB -->
+	<!-- fusarium gram -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/string/fgram_atts.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/string-db-atts-ensembl-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	<!-- fusarium oxy -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/string/fusarium_oxy_attributes.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/string-db-atts-ensembl-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	<!-- fusarium gram -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/string/fusarium_gram_attributes.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/string-db-atts-ensembl-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	<!-- fusarium psuedo -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/string/fusarium_psuedo_atts.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/string-db-atts-ensembl-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!--  Additional F culmorum accessions -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/OMA/fCulmorum_liftOver.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/fcul-gene-mapping.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!--  Additional F culmorum names -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/mapping/fusarium-phi-gene-mapping.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/fcul-gene-phi-mapping.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	
+	<!-- Note: updated to use raw BLAST data with h_s_s relationship; mapped via ondex to PhiBase proteins --> 
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/BLAST/phibase-blast-filtered.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/blast-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- Main BLAST data for ascoymata --> 
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/BLAST/f_ascomycota_blast.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/blast-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- Main PhiBase data - Disease relationships -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/phibase/fusarium-phibase-disease.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/phibase-disease-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- Main PhiBase data - Phenotype relationships -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/phibase/fusarium-phibase-phenotype.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/phibase-phenotype-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- fusarium gram gene names from mutant db file -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/mapping/fg_gene_names.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/mutant-db-config.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- fusarium gram gene names from nuerospora ensembl gene names -->
+	<Parser name="tabParser2">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/mapping/nuerospora-fcul-gene-mapping.txt</Arg>
+      <Arg name="configFile">${configDir}/${species_name}/fcul-gene-phi-mapping.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+		
+	<Parser name="uniprot">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/uniprot/all_fungal_proteins_uniprot.xml</Arg>
+      <Arg name="DbRefAcc">false</Arg>
+      <Arg name="TagInformation">false</Arg>
+      <Arg name="HideLargeScaleRef">true</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<Parser name="uniprot">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/uniprot/fculmorum_uniprot.xml</Arg>
+      <Arg name="DbRefAcc">false</Arg>
+      <Arg name="TagInformation">false</Arg>
+      <Arg name="HideLargeScaleRef">true</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- APO -->
+	<Parser name="owlParser">
+		<Arg name="graphId">default</Arg>
+		<Arg name="configFile">./config/owl-parser/apo_cfg.xml</Arg>
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/ontologies/apo.owl</Arg>
+	</Parser>
+	
+	<!-- OMP -->
+	<Parser name="owlParser">
+		<Arg name="graphId">default</Arg>
+		<Arg name="configFile">./config/owl-parser/omp_cfg.xml</Arg>
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/ontologies/omp.owl</Arg>
+	</Parser>
+	
+	
+	<!-- Pubmed downloaded papers - fusarium only -->
+    <Parser name="medline">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/pubmed/fusarium_query.xml</Arg>
+      <Arg name="ImportCitedPMIDs">true</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+	
+	<!-- Pubmed downloaded papers - all pathogens -->
+    <Parser name="medline">
+      <Arg name="InputFile">${baseDir}/organisms/${species_name}/pubmed/pathogen_pubmed_query.xml</Arg>
+      <Arg name="ImportCitedPMIDs">false</Arg>
+      <Arg name="graphId">default</Arg>
+    </Parser>
+			
+	<Mapping name="tmbased">
+      <Arg name="OnlyPreferredNames">false</Arg>
+      <Arg name="UseFullText">false</Arg>
+      <Arg name="Search">exact</Arg>
+      <Arg name="graphId">default</Arg>
+      <Arg name="ConceptClass">Gene</Arg>	  
+      <Arg name="ConceptClass">Phenotype</Arg>
+	  <Arg name="ConceptClass">Protein</Arg>
+	  <Arg name="ConceptClass">Disease</Arg>
+    </Mapping>
+	
+	<Mapping name="lowmemoryaccessionbased">
+      <Arg name="IgnoreAmbiguity">true</Arg>
+      <Arg name="RelationType">collapse_me</Arg>
+      <Arg name="WithinDataSourceMapping">true</Arg>
+	  <Arg name="graphId">default</Arg>
+    </Mapping>
+
+    <Transformer name="relationcollapser">
+      <Arg name="CloneAttributes">true</Arg>
+      <Arg name="CopyTagReferences">true</Arg>
+      <Arg name="graphId">default</Arg>
+      <Arg name="RelationType">collapse_me</Arg>
+    </Transformer>
+	
+	<Export name="oxl">
+      <Arg name="pretty">true</Arg>
+      <Arg name="ExportIsolatedConcepts">true</Arg>
+      <Arg name="GZip">true</Arg>
+      <Arg name="ExportFile">${baseDir}/organisms/${species_name}/knets/FculmorumKNET_pre_final.oxl</Arg>
+      <Arg name="graphId">default</Arg>
+    </Export>
+		
+	<!-- YeastKNET -->
+ 	<Parser name="oxl">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/oxls/YeastKNET_v43.oxl</Arg>
+		<Arg name="graphId">default</Arg>
+	</Parser> 
+	
+	<!-- aspKNET -->
+	<Parser name="oxl">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/oxls/AspergillusKNET_v43.oxl</Arg>
+		<Arg name="graphId">default</Arg>
+	</Parser>
+	
+	<!-- nuerosporaKNET -->
+ 	<Parser name="oxl">
+		<Arg name="InputFile">${baseDir}/organisms/${species_name}/oxls/NeurosporaKNET_v43.oxl</Arg>
+		<Arg name="graphId">default</Arg>
+	</Parser> 
+	
+	<Transformer name="coocurrence">
+      <Arg name="TargetConceptClass">Publication</Arg>
+      <Arg name="graphId">default</Arg>
+    </Transformer>
+    
+	<Filter name="relationtype">
+      <Arg name="graphId">default</Arg>
+      <Arg name="TargetRelationType">cooc_wi</Arg>
+	  <Arg name="TargetRelationType">occ_in</Arg>
+	  <Arg name="ConceptClassRestriction">Gene,Publication</Arg>	  
+      <Arg name="ConceptClassRestriction">Gene,Protein</Arg>
+	  <Arg name="ConceptClassRestriction">Protein,Gene</Arg>
+      <Arg name="ConceptClassRestriction">Protein,Protein</Arg>
+      <Arg name="ConceptClassRestriction">Gene,Gene</Arg>
+	  <Arg name="ConceptClassRestriction">Disease,Protein</Arg>
+	  <Arg name="ConceptClassRestriction">Protein, Disease</Arg>		  	  
+    </Filter>	
+    
+	<Filter name="attributevalue">
+      <Arg name="AttributeName">CoSenNum</Arg>
+      <Arg name="Including">true</Arg>
+      <Arg name="IgnoreValue">false</Arg>
+      <Arg name="Operator">&gt;</Arg>
+      <Arg name="Modulus">false</Arg>
+      <Arg name="graphId">default</Arg>
+      <Arg name="AttributeValue">0</Arg>
+      <Arg name="RelationType">cooc_wi</Arg>
+    </Filter>
+	
+	<!-- Remove unconnected publications -->
+	<Filter name="unconnected">
+      <Arg name="RemoveTagDependencies">false</Arg>
+	  <Arg name="ConceptClassRestriction">Publication</Arg>
+      <Arg name="graphId">default</Arg>
+    </Filter>
+	
+	<Mapping name="lowmemoryaccessionbased">
+      <Arg name="IgnoreAmbiguity">true</Arg>
+      <Arg name="RelationType">collapse_me</Arg>
+      <Arg name="WithinDataSourceMapping">true</Arg>
+	  <Arg name="graphId">default</Arg>
+    </Mapping>
+
+    <Transformer name="relationcollapser">
+      <Arg name="CloneAttributes">true</Arg>
+      <Arg name="CopyTagReferences">true</Arg>
+      <Arg name="graphId">default</Arg>
+      <Arg name="RelationType">collapse_me</Arg>
+    </Transformer>
+	
+	<!-- Remove unconnected publications/proteins -->
+	<Filter name="unconnected">
+		<Arg name="RemoveTagDependencies">false</Arg>
+		<Arg name="graphId">default</Arg>
+	</Filter>
+
+	<Export name="oxl">
+      <Arg name="pretty">true</Arg>
+      <Arg name="ExportIsolatedConcepts">true</Arg>
+      <Arg name="GZip">true</Arg>
+      <Arg name="ExportFile">${baseDir}/organisms/${species_name}/knets/FculmorumKNET_final.oxl</Arg>
+      <Arg name="graphId">default</Arg>
+    </Export>
+	
+	<Export name="graphinfo">
+      <Arg name="ExportFile">${baseDir}/organisms/${species_name}/reports/fusarium-culmorum-report.xml</Arg>
+      <Arg name="graphId">default</Arg>
+    </Export>
+
+  </Workflow>
+</Ondex>
