@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<parser 
+	xmlns = "http://www.ondex.org/xml/schema/tab_parser"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<delimiter>\t</delimiter>
+	<quote>"</quote>
+	<encoding>UTF-8</encoding>
+	<start-line>1</start-line>
+	
+	<concept id="prot">
+		<class>Protein</class>
+		<data-source>ENSEMBL</data-source>
+		<accession data-source="ENSEMBL-FUNGI">
+			<column index='0' />
+		</accession>
+	</concept>
+	
+	<concept id="brite">
+		<class>Pathway</class>
+		<data-source>BRITE</data-source>
+		<accession data-source="BRITE">
+			<column index='1' />
+		</accession>
+	</concept>
+	<relation source-ref="prot" target-ref="desc">
+		<type>related_to</type>
+	</relation>
+</parser>
