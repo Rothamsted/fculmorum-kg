@@ -7,8 +7,8 @@
 	<quote>"</quote>
 	<encoding>UTF-8</encoding>
 	<start-line>1</start-line>
-	
-	<concept id="prot">
+		
+	<concept id="proR">
 		<class>Protein</class>
 		<data-source>ENSEMBL</data-source>
 		<accession data-source="ENSEMBL-FUNGI">
@@ -16,14 +16,21 @@
 		</accession>
 	</concept>
 	
-	<concept id="brite">
-		<class>Pathway</class>
-		<data-source>BRITE</data-source>
-		<accession data-source="BRITE">
+	<concept id="ProL">
+		<class>Protein</class>
+		<data-source>ENSEMBL-FUNGI</data-source>
+		<accession data-source="ENSEMBL-FUNGI">
 			<column index='1' />
 		</accession>
 	</concept>
-	<relation source-ref="prot" target-ref="desc">
-		<type>related_to</type>
+	
+	<relation source-ref="proR" target-ref="ProL">
+		<type>it_wi</type>
+		<attribute type="TEXT" name="combined_score">
+			<column index='2' />
+		</attribute>
+		<attribute type="TEXT" name="source">
+			STRINGDB
+		</attribute>
 	</relation>
 </parser>

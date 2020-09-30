@@ -7,23 +7,21 @@
 	<quote>"</quote>
 	<encoding>UTF-8</encoding>
 	<start-line>1</start-line>
-	
-	<concept id="prot">
-		<class>Protein</class>
+		
+	<concept id="gene">
+		<class>Gene</class>
 		<data-source>ENSEMBL</data-source>
 		<accession data-source="ENSEMBL-FUNGI">
 			<column index='0' />
 		</accession>
-	</concept>
-	
-	<concept id="brite">
-		<class>Pathway</class>
-		<data-source>BRITE</data-source>
-		<accession data-source="BRITE">
+		<accession data-source="BROAD">
 			<column index='1' />
 		</accession>
+		<accession data-source="MIPS">
+			<column index='2' />
+		</accession>
+		<accession data-source="rresv4">
+			<column index='3' />
+		</accession>
 	</concept>
-	<relation source-ref="prot" target-ref="desc">
-		<type>related_to</type>
-	</relation>
 </parser>

@@ -12,18 +12,28 @@
 		<class>Protein</class>
 		<data-source>ENSEMBL</data-source>
 		<accession data-source="ENSEMBL-FUNGI">
-			<column index='0' />
+			<column index='2' />
 		</accession>
 	</concept>
 	
-	<concept id="brite">
-		<class>Pathway</class>
-		<data-source>BRITE</data-source>
-		<accession data-source="BRITE">
-			<column index='1' />
+	<concept id="ipro">
+		<class>ProtDomain</class>
+		<data-source>ENSEMBL</data-source>
+		<accession data-source="IPRO">
+			<column index='0' />
 		</accession>
+		<name>
+			<column index='0' />
+		</name>
+		<name preferred="true">
+			<column index='0' />
+		</name>
+		<attribute type="TEXT" name="Description">
+			<column index='3' />
+		</attribute>
 	</concept>
-	<relation source-ref="prot" target-ref="desc">
-		<type>related_to</type>
+	
+	<relation source-ref="prot" target-ref="ipro">
+		<type>has_domain</type>
 	</relation>
 </parser>

@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<parser 
+	xmlns = "http://www.ondex.org/xml/schema/tab_parser"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<delimiter>\t</delimiter>
+	<quote>"</quote>
+	<encoding>UTF-8</encoding>
+	
+	
+	<concept id="Protein">
+		<class>Protein</class>
+		<data-source>UNIPROTKB</data-source>
+		<accession data-source="UNIPROTKB">
+			<column index='1' />
+		</accession>
+	</concept>
+	
+	<concept id="Disease">
+		<class>Disease</class>
+		<data-source>PHIBASE</data-source>
+		<name preferred="true">
+			<column index='4' />
+		</name>
+	</concept>
+	
+	<concept id="Phenotype">
+		<class>Phenotype</class>
+		<data-source>PHIPO</data-source>
+		<name preferred="true">
+			<column index='5' />
+		</name>
+		<attribute name="Interaction-phenotype" type="TEXT">
+            Interaction-phenotype
+        </attribute>	
+	</concept>
+	
+	<relation source-ref="Protein" target-ref="Disease">
+		<type>inv_in</type>
+		<attribute name="host-species" type="TEXT">
+            <column index='2' />
+        </attribute>
+		<attribute name="pathogen-species" type="TEXT">
+            <column index='3' />
+        </attribute>		
+	</relation>
+	
+	<relation source-ref="Protein" target-ref="Phenotype">
+		<type>occ_in</type>
+		<attribute name="host-species" type="TEXT">
+            <column index='2' />
+        </attribute>
+		<attribute name="pathogen-species" type="TEXT">
+            <column index='3' />
+        </attribute>		
+	</relation>
+</parser>

@@ -16,14 +16,15 @@
 		</accession>
 	</concept>
 	
-	<concept id="brite">
-		<class>Pathway</class>
-		<data-source>BRITE</data-source>
-		<accession data-source="BRITE">
+	<concept id="ko">
+		<class>KO</class>
+		<data-source>KEGG</data-source>
+		<accession data-source="KEGG">
 			<column index='1' />
 		</accession>
 	</concept>
-	<relation source-ref="prot" target-ref="desc">
-		<type>related_to</type>
+	
+	<relation source-ref="prot" target-ref="ko">
+		<type>has_function</type>
 	</relation>
 </parser>

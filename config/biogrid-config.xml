@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<parser 
+	xmlns = "http://www.ondex.org/xml/schema/tab_parser"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<delimiter>\t</delimiter>
+	<quote>"</quote>
+	<encoding>UTF-8</encoding>
+	<start-line>1</start-line>
+	
+	<concept id="protL">
+		<class>Protein</class>
+		<data-source>BIOGRID</data-source>
+		<accession data-source="ENSEMBL">
+			<column index = '5'/>
+		</accession>
+	</concept>
+	
+	<concept id="protR">
+		<class>Protein</class>
+		<data-source>BIOGRID</data-source>
+		<accession data-source="ENSEMBL">
+			<column index='6' />
+		</accession>
+	</concept>
+	
+	<concept id="pub">
+		<class>Publication</class>
+		<data-source>BIOGRID</data-source>
+		<accession data-source="NLM">
+			<column index='14' />
+		</accession>
+	</concept>
+	
+	<relation source-ref="protL" target-ref="protR">
+		<type>
+			<column index='12' />
+		</type>
+		<attribute name="Experimental_System" type="TEXT">
+			<column index='11' />
+		</attribute>
+		<attribute name="PubMed" type="TEXT">
+			<column index='14' />
+		</attribute>
+		<attribute name="Author" type="TEXT">
+			<column index='13' />
+		</attribute>
+		<attribute name="Throughput" type="TEXT">
+			<column index='17' />
+		</attribute>
+	</relation>
+	
+	<relation source-ref="protL" target-ref="pub">
+		<type>pub_in</type>
+	</relation>
+	
+	<relation source-ref="protR" target-ref="pub">
+		<type>pub_in</type>
+	</relation>
+</parser>

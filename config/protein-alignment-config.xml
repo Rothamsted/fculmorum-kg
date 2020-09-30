@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<parser 
+	xmlns = "http://www.ondex.org/xml/schema/tab_parser"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<delimiter>\t</delimiter>
+	<quote>"</quote>
+	<encoding>UTF-8</encoding>
+	<start-line>1</start-line>
+	
+	<concept id="protL">
+		<class>Protein</class>
+		<data-source>BLAST</data-source>
+		<accession data-source="UNIPROTKB">
+			<column index='1' />
+		</accession>
+	</concept>
+	
+	<concept id="protR">
+		<class>BLAST</class>
+		<data-source>BLAST</data-source>
+		<accession data-source="ENSEMBL-FUNGI">
+			<column index='0' />
+		</accession>
+	</concept>
+	
+	<relation source-ref="protR" target-ref="protL">
+		<type>h_s_s</type>
+		<evidence>BLAST</evidence>
+		<attribute name="ALGORITHM" type="TEXT">Smith-Waterman</attribute>
+		<attribute name="SCORE" type="NUMBER">
+			<column index='2' />
+		</attribute>
+		<attribute name="E-VALUE" type="NUMBER">
+			<column index='3' />
+		</attribute>
+		<attribute name="PERCENTALIGNMENT" type="NUMBER">
+			<column index='4' />
+		</attribute>
+		<attribute name="PERCENTQUERY" type="NUMBER">
+			<column index='5' />
+		</attribute>
+		<attribute name="PERCENTTARGET" type="NUMBER">
+			<column index='6' />
+		</attribute>
+		<attribute name="QUERYSTART" type="NUMBER">
+			<column index='7' />
+		</attribute>
+		<attribute name="QUERYEND" type="NUMBER">
+			<column index='8' />
+		</attribute>
+		<attribute name="TARGETSTART" type="NUMBER">
+			<column index='9' />
+		</attribute>
+		<attribute name="TARGETEND" type="NUMBER">
+			<column index='10' />
+		</attribute>
+		<attribute name="QUERYLENGTH" type="NUMBER">
+			<column index='11' />
+		</attribute>
+		<attribute name="TARGETLENGTH" type="NUMBER">
+			<column index='12' />
+		</attribute>
+	</relation>
+</parser>

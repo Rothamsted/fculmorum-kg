@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<parser 
+	xmlns = "http://www.ondex.org/xml/schema/tab_parser"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<delimiter>\t</delimiter>
+	<quote>"</quote>
+	<encoding>UTF-8</encoding>
+	
+	
+	<concept id="Protein">
+		<class>Protein</class>
+		<data-source>UNIPROTKB</data-source>
+		<accession data-source="UNIPROTKB">
+			<column index='0' />
+		</accession>
+	</concept>
+
+	
+	<concept id="Phenotype">
+		<class>Phenotype</class>
+		<data-source>PHIPO</data-source>
+		<name preferred="true">
+			<column index='3' />
+		</name>
+		<attribute name="Mutant-phenotype" type="TEXT">
+            Mutant-phenotype
+        </attribute>	
+	</concept>
+		
+	<relation source-ref="Protein" target-ref="Phenotype">
+		<type>has_observ_pheno</type>
+		<attribute name="host-species" type="TEXT">
+            <column index='1' />
+        </attribute>
+		<attribute name="pathogen-species" type="TEXT">
+            <column index='2' />
+        </attribute>		
+	</relation>
+</parser>

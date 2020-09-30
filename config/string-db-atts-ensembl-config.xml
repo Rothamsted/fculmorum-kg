@@ -7,23 +7,21 @@
 	<quote>"</quote>
 	<encoding>UTF-8</encoding>
 	<start-line>1</start-line>
-	
-	<concept id="prot">
+		
+	<concept id="protein">
 		<class>Protein</class>
 		<data-source>ENSEMBL</data-source>
+		<name preferred="true">
+			<column index='1' />
+		</name>
 		<accession data-source="ENSEMBL-FUNGI">
 			<column index='0' />
 		</accession>
+		<attribute type="TEXT" name="Protein_size">
+			<column index='2' />
+		</attribute>
+		<attribute type="TEXT" name="annotation	">
+			<column index='3' />
+		</attribute>
 	</concept>
-	
-	<concept id="brite">
-		<class>Pathway</class>
-		<data-source>BRITE</data-source>
-		<accession data-source="BRITE">
-			<column index='1' />
-		</accession>
-	</concept>
-	<relation source-ref="prot" target-ref="desc">
-		<type>related_to</type>
-	</relation>
 </parser>

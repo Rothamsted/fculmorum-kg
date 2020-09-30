@@ -1,0 +1,9 @@
+protein	Gene
+gene_product	Gene
+rna	Gene
+rrna	Gene
+trna	Gene
+snorna	Gene
+mirna	Gene
+snrna	Gene
+gene	Gene

@@ -16,14 +16,15 @@
 		</accession>
 	</concept>
 	
-	<concept id="brite">
-		<class>Pathway</class>
-		<data-source>BRITE</data-source>
-		<accession data-source="BRITE">
+	<concept id="annotation">
+		<class>B2GO</class>
+		<data-source>BLAST2GO</data-source>
+		<accession data-source="BLAST2GO">
 			<column index='1' />
 		</accession>
 	</concept>
-	<relation source-ref="prot" target-ref="desc">
-		<type>related_to</type>
+	
+	<relation source-ref="prot" target-ref="annotation">
+		<type>has_annotation</type>
 	</relation>
 </parser>
